@@ -5,6 +5,7 @@ import { useInfiniteQuery } from "@tanstack/react-query";
 import type { InfiniteData } from "@tanstack/query-core";
 import { Button } from "@/components/ui/button";
 import { SignalEmptyState } from "@/components/SignalEmptyState";
+import { PremiumSignalBadge } from "@/components/PremiumSignalBadge";
 import type { Signal } from "@/lib/signals";
 
 interface SignalResponse {
@@ -120,8 +121,16 @@ export function SignalFeed() {
                     {signal.ticker} • {signal.action}
                   </h3>
                 </div>
-                <div className="shrink-0 rounded-full border border-slate-700 bg-slate-900 px-3 py-1.5 text-xs font-semibold text-sky-300 sm:px-4 sm:py-2 sm:text-sm">
-                  Confidence {signal.confidence}%
+                <div className="shrink-0 flex items-center gap-2">
+                  {signal.isPremium && (
+                    <PremiumSignalBadge
+                      hasAccess={signal.hasAccess}
+                      requiredStake={signal.requiredStake}
+                    />
+                  )}
+                  <div className="rounded-full border border-slate-700 bg-slate-900 px-3 py-1.5 text-xs font-semibold text-sky-300 sm:px-4 sm:py-2 sm:text-sm">
+                    Confidence {signal.confidence}%
+                  </div>
                 </div>
               </div>
               <p className="mt-4 text-sm leading-6 text-foreground-muted">{signal.details}</p>
